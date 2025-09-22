@@ -1,0 +1,91 @@
+import smbus
+import time
+
+# Constants
+I2C_BUS = 1
+SI5351A_ADDRESS = 0x60  # Default address for Si5351A
+
+def scan_i2c_bus(bus):
+    print("Scanning I2C bus for devices...")
+    devices = []
+    for addr in range(0x03, 0x78):
+        try:
+            bus.read_byte(addr)
+            devices.append(hex(addr))
+        except OSError:
+            pass
+    return devices
+
+def read_register(bus, address, reg):
+    try:
+        value = bus.read_byte_data(address, reg)
+        print(f"Read [0x{reg:02X}] = 0x{value:02X}")
+    except Exception as e:
+        print(f"Error reading register 0x{reg:02X}: {e}")
+
+def write_register(bus, address, reg, value):
+    try:
+        bus.write_byte_data(address, reg, value)
+        print(f"Wrote 0x{value:02X} to register 0x{reg:02X}")
+    except Exception as e:
+        print(f"Error writing to register 0x{reg:02X}: {e}")
+
+def user_command_loop(bus):
+    print("\n=== Si5351A I2C Command Interface ===")
+    print("Commands:")
+    print("  read <reg>          Read from register (e.g. read 0x00)")
+    print("  write <reg> <val>   Write to register (e.g. write 0x03 0xFF)")
+    print("  exit                Quit the program\n")
+
+    while True:
+        cmd = input(">> ").strip().lower()
+
+        if cmd == "exit":
+            print("Exiting.")
+            break
+
+        elif cmd.startswith("read"):
+            parts = cmd.split()
+            if len(parts) == 2:
+                try:
+                    reg = int(parts[1], 16)
+                    read_register(bus, SI5351A_ADDRESS, reg)
+                except ValueError:
+                    print("Invalid register address. Use hex, e.g. 0x03.")
+            else:
+                print("Usage: read <reg>")
+
+        elif cmd.startswith("write"):
+            parts = cmd.split()
+            if len(parts) == 3:
+                try:
+                    reg = int(parts[1], 16)
+                    val = int(parts[2], 16)
+                    write_register(bus, SI5351A_ADDRESS, reg, val)
+                except ValueError:
+                    print("Invalid register or value. Use hex, e.g. 0x03 0xFF.")
+            else:
+                print("Usage: write <reg> <value>")
+
+        else:
+            print("Unknown command. Use 'read', 'write', or 'exit'.")
+
+def main():
+    bus = smbus.SMBus(I2C_BUS)
+    devices = scan_i2c_bus(bus)
+
+    if hex(SI5351A_ADDRESS) in devices:
+        print(f"Si5351A detected at address {hex(SI5351A_ADDRESS)}.")
+        user_command_loop(bus)
+    else:
+        print(f"Si5351A not found at {hex(SI5351A_ADDRESS)}. Devices found: {devices}")
+
+if __name__ == "__main__":
+    main()
+
+
+# scp /home/rtrk/Desktop/osurv_projekat_ploca/main.py pi@10.1.207.145:/home/pi/Desktop
+# password malina
+
+
+
