@@ -86,6 +86,6 @@ if __name__ == "__main__":
 
 # scp /home/rtrk/Desktop/osurv_projekat_ploca/main.py pi@10.1.207.145:/home/pi/Desktop
 # password malina
-
+# Arduino Nano 33 IoT
 
 
