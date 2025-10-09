@@ -1,0 +1,59 @@
+python3 newnewnew.py
+Si5351A detected at address 0x60.
+
+=== Clock Gen Click CLI ===
+Commands:
+ init                 - Initialize Si5351A
+ set <clk> <freq>     - Set CLK0–CLK2 to a specific frequency (e.g. set 0 1000000)
+ on <clk>             - Enable clock output (CLK0–2)
+ off <clk>            - Disable clock output (CLK0–2)
+ read <reg>           - Read value of a register (e.g. read 0)
+ status               - Show status register (0x00)
+ exit                 - Exit CLI
+
+>> off 0
+CLK0 disabled
+>> on 0
+CLK0 enabled
+>> set 0 10000
+CLK0 set to 10000 Hz: ms_div=1250.00, R=64, P1=159488, P2=0, P3=1048575, r_div=6, divby4=0
+Register dump for verification:
+Reg 42 = 0xFF
+Reg 43 = 0xFF
+Reg 44 = 0x62
+Reg 45 = 0x6F
+Reg 46 = 0x00
+Reg 47 = 0xF0
+Reg 48 = 0x00
+Reg 49 = 0x00
+Control Reg 16 = 0x4F
+Output Enable Reg 3 = 0x00
+Status Reg 0 = 0x11 (0x00 = OK)
+>> set 0 100000
+CLK0 set to 100000 Hz: ms_div=2000.00, R=4, P1=255488, P2=0, P3=1048575, r_div=2, divby4=0
+Register dump for verification:
+Reg 42 = 0xFF
+Reg 43 = 0xFF
+Reg 44 = 0x23
+Reg 45 = 0xE6
+Reg 46 = 0x00
+Reg 47 = 0xF0
+Reg 48 = 0x00
+Reg 49 = 0x00
+Control Reg 16 = 0x4F
+Output Enable Reg 3 = 0x00
+Status Reg 0 = 0x11 (0x00 = OK)
+>> set 0 1000000
+CLK0 set to 1000000 Hz: ms_div=800.00, R=1, P1=101888, P2=0, P3=1048575, r_div=0, divby4=0
+Register dump for verification:
+Reg 42 = 0xFF
+Reg 43 = 0xFF
+Reg 44 = 0x01
+Reg 45 = 0x8E
+Reg 46 = 0x00
+Reg 47 = 0xF0
+Reg 48 = 0x00
+Reg 49 = 0x00
+Control Reg 16 = 0x4F
+Output Enable Reg 3 = 0x00
+Status Reg 0 = 0x11 (0x00 = OK)
