@@ -1,0 +1,28 @@
+python3 newnewnewnew.py
+Si5351A detected at address 0x60.
+
+=== Clock Gen Click CLI ===
+Commands:
+ init                 - Initialize Si5351A
+ set <clk> <freq>     - Set CLK0–CLK2 to a specific frequency (e.g. set 0 1000000)
+ on <clk>             - Enable clock output (CLK0–2)
+ off <clk>            - Disable clock output (CLK0–2)
+ read <reg>           - Read value of a register (e.g. read 0)
+ status               - Show status register (0x00)
+ exit                 - Exit CLI
+
+>> off 0
+CLK0 disabled
+>> init
+I2C write verification failed for Reg 177: wrote 0xA0, read 0x00
+I2C write error to Reg 177: Write verification failed for Reg 177
+I2C error during initialization
+>> on 0
+CLK0 enabled
+>> set 0 10000
+I2C write verification failed for Reg 177: wrote 0x20, read 0x00
+I2C write error to Reg 177: Write verification failed for Reg 177
+I2C error during frequency setting
+>> status
+Status [0x00] = 0x11 (0x00 = OK)
+>> 
